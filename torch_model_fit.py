@@ -2,8 +2,7 @@ import time
 import torch
 from torch.cuda.amp import autocast,GradScaler 
 from torch import Tensor 
-from typing import Tuple,Union,List,Any,TypeVar
-import numpy as np
+from typing import Tuple,Union,Any,TypeVar
 from torch.nn.modules.linear import Linear
 import warnings
 cpu_device = torch.device('cpu')
@@ -35,7 +34,13 @@ class Fit:
         y_preprocesser:Union[function,Tuple[function,...]] = None,
         ) -> Tuple[Any]:
         """
-        Documentation
+        Args:
+            model [required]:your pytorch model.
+            criterion [required]: loss functions. You can set multiple it with tuple for your model.
+            optimizer [required]: optimizer class. 
+            train_x [required]: training data. You can input multiple it with tuple for your model
+            train_y [required]: training answer. You can input mutiple it with tuple for your model.
+            device [required]: torch.device 
         """
         device = torch.device(device)
         
@@ -482,5 +487,6 @@ if __name__ == '__main__':
     )
     print(x)
     print(len(x))
-
+    Fit.metrics_threshold = 1.0
+    print(Fit.metrics_threshold)
 
