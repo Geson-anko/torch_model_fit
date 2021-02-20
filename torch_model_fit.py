@@ -189,26 +189,26 @@ class Fit:
                 for i,l in enumerate(loss):
                     r = l.item()
                     avg_loss[i] += r 
-                    _mes += 'loss {}:{:5.5f} '.format(i,r)
+                    _mes += 'loss{} : {:5.5f} '.format(i,r)
                     
                 if _metrics:
                     mvalues = [m(o,a) for (m,o,a) in zip(metrics,output,data_y)]
                     for i,m in enumerate(mvalues):
                         avg_met_result[i] += m
-                        _mes += 'metrics {}:{:5.5f} '.format(i,m)
+                        _mes += 'metrics{} : {:5.5f} '.format(i,m)
                 print(_mes,end='')
             print('')
 
             # result saving
             avg_loss /= maxcount
             for i,l in enumerate(avg_loss):
-                message += 'loss {}:{:5.5f} '.format(i,l)
+                message += 'loss{} : {:5.5f} '.format(i,l)
                 losses[epoch] = l
 
             if _metrics:                  
                 avg_met_result /= maxcount
                 for i,m in enumerate(avg_met_result):
-                    message += 'metrics {}:{:5.5f} '.format(i,m)
+                    message += 'metrics{} : {:5.5f} '.format(i,m)
                     met_results[epoch] = m
 
             
@@ -243,13 +243,13 @@ class Fit:
                         for i,l in enumerate(loss):
                             r = l.item()
                             avg_val_loss[i] += r 
-                            _mes += 'avg_loss {}:{:5.5f} '.format(i,r)
+                            _mes += 'avg_loss{} : {:5.5f} '.format(i,r)
 
                         if _metrics:
                             mvalues = [m(o,a) for (m,o,a) in zip(metrics,output,data_y)]
                             for i,m in enumerate(mvalues):
                                 avg_val_met_results[i] += m
-                                _mes += 'avg_metrics {}:{:5.5f} '.format(i,m)
+                                _mes += 'avg_metrics{} : {:5.5f} '.format(i,m)
                         
                         print(_mes,end='')
                     print('')
@@ -257,12 +257,12 @@ class Fit:
                     # result saving
                     avg_val_loss /= val_maxcount
                     for i,l in enumerate(avg_val_loss):
-                        message += 'avg_val_loss {}:{:5.5f} '.format(i,l)
+                        message += 'avg_val_loss{} : {:5.5f} '.format(i,l)
                         val_losses[epoch] = l 
                     if _metrics:
                         avg_val_met_results /= val_maxcount
                         for i,m in enumerate(avg_met_result):
-                            message += 'avg_val_metrics {}:{:5.5f} '.format(i,m)
+                            message += 'avg_val_metrics{} : {:5.5f} '.format(i,m)
                             val_met_results[epoch] = m
             lre = optimizer.param_groups[0]['lr']
             message += 'lr :{:5.5f} '.format(lre)
@@ -275,7 +275,7 @@ class Fit:
             print(message)
             print('-'*printlen)
             tani = elapsed * (epochs - epoch -1)
-            print(f'\n{int(tani//3600)} : {int((tani%3600//60))} : {str(tani%60)[:5]}\n')  
+            print(f'\ntime remaining {int(tani//3600)} : {int((tani%3600)//60)} : {str(tani%60)[:5]}\n')  
             print('='*printlen)
         print('finished')
         
@@ -474,9 +474,9 @@ if __name__ == '__main__':
         optimizer=optimizer,
         train_x=[train_x,train_x],
         train_y=[train_y,train_y],
-        val_x=[train_x,train_x],
-        val_y=[train_y,train_y],
-        validatioin_split=0.1,
+#        val_x=[train_x,train_x],
+#        val_y=[train_y,train_y],
+#        validatioin_split=0.1,
         x_preprocesser=x_preproc,
         y_preprocesser=y_preproc,
         metrics=met,
