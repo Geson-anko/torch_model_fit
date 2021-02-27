@@ -318,14 +318,14 @@ class Fit:
         datalen = len(data[0])
 
         outputs = []
-        model = model.type(data.dtype)
+        model = model.type(data[0].dtype)
 
         with torch.no_grad():
             for counter,data_idx in enumerate(range(0,datalen,batch_size),1):
-                data = [i[data_idx:data_idx+batch_size].to(device) for i in data]
+                _data = [i[data_idx:data_idx+batch_size].to(device) for i in data]
                 if _prepro:
-                    data = [f(i) for f,i in zip(preprocesser,data)]
-                output = model(*data).to('cpu')
+                    _data = [f(i) for f,i in zip(preprocesser,_data)]
+                output = model(*_data).to('cpu')
                 outputs.append(output)
         outputs = torch.cat(outputs)
         return outputs
