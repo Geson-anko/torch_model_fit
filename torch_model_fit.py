@@ -26,7 +26,7 @@ class Fit:
         val_x:Union[Tensor,Tuple[Tensor,...]]=None,
         val_y:Union[Tensor,Tuple[Tensor,...]]=None,
         auto_casting:bool = True,
-        validatioin_split:float = 0.0,
+        validation_split:float = 0.0,
         scheduler:torch.optim.lr_scheduler=None,
         #scheduler:Union[torch.optim.lr_scheduler,Tuple[torch.optim.lr_scheduler,...]]=None,
         metrics:Union[function,Tuple[Any,...]] = None,
@@ -81,8 +81,8 @@ class Fit:
         train_len = len(train_x[0])
         val_len = 0
         if val_x[0] is None and val_y[0] is None:
-            if validatioin_split > 0.0:
-                vs = round(train_len * validatioin_split)
+            if validation_split > 0.0:
+                vs = round(train_len * validation_split)
                 ts = train_len - vs
                 train_x = [i[:ts] for i in train_x]
                 train_y = [i[:ts] for i in train_y]
@@ -90,7 +90,7 @@ class Fit:
                 val_y = [i[-vs:] for i in train_y]
                 train_len = ts
                 val_len = vs
-        elif validatioin_split > 0.0:
+        elif validation_split > 0.0:
             val_len = len(val_x[0])
             warnings.warn('Ignore validation_split because you entered validation data')
         
@@ -487,7 +487,7 @@ if __name__ == '__main__':
         train_y=[train_y,train_y],
 #        val_x=[train_x,train_x],
 #        val_y=[train_y,train_y],
-#        validatioin_split=0.1,
+#        validation_split=0.1,
         x_preprocesser=x_preproc,
         y_preprocesser=y_preproc,
         metrics=met,
